@@ -36,25 +36,17 @@ public class CustomerController {
 	@RequestMapping(value = "/customer/get/{uniqueId}",method = RequestMethod.GET)
 	public ResponseEntity<ProductDetails> getProducts(@PathVariable String uniqueId){
 		
-		for (Product product : admin.getProducts()) {
-			if (product.getUniqueNoString().equalsIgnoreCase(uniqueId)) {
-				return new ResponseEntity<ProductDetails>(product.getProductDetails(), HttpStatus.OK);
-			}
-		}
+	
 		return new ResponseEntity<ProductDetails>(HttpStatus.BAD_REQUEST);
 	}
 	@RequestMapping(value = "/customer/get/{uniqueId}/buy/{quantity}",method = RequestMethod.GET)
 	public ResponseEntity<Invoice> orderProducts(@PathVariable String uniqueId,
 			@PathVariable int quantity){
 		
-		for (Product product : admin.getProducts()) {
-			if (product.getUniqueNoString().equalsIgnoreCase(uniqueId)) {
-			invoice = customer.buyNow(product, quantity);
-				break;
-				
-			}
-		}
+	
 		//new ResponseEntity<Invoice>(invoice, HttpStatus.OK)
 		return new ResponseEntity<Invoice>(invoice, HttpStatus.OK);
-	}
+		}
+		
+	
 }

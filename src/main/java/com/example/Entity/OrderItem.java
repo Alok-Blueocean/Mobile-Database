@@ -1,14 +1,20 @@
 package com.example.Entity;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 import org.springframework.stereotype.Component;
 
 @Component
+@Entity
 public class OrderItem {
 	
-	@Autowired
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 	private Product product;
-	
 	private int quantity;
 	
 	@Override

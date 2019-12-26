@@ -16,7 +16,7 @@ import com.example.Entity.ProductDetails.ProductDetailsBuilder;
 
 @RestController
 public class MBController {
-
+/*
 	@Autowired
 	public Admin admin;
 	
@@ -31,23 +31,7 @@ public class MBController {
 	@RequestMapping(value = "/add")
 	public void addProducts() {
 		
-		ProductDetails productd = new ProductDetails().new ProductDetailsBuilder()
-				.setTypeString("phone")
-				.setPrice(1000)
-				.build();
-		Product product1 = new Product().new ProductBuilder()
-				.setUniqueNoString("Nok1")
-				.setNameString("Nokia 2033")
-				.setPrice(1000)
-				.build();
-		product1.setProductDetails(productd);
-		Product product2 = new Product().new ProductBuilder()
-				.setUniqueNoString("Nok2")
-				.setNameString("Nokia 2133")
-				.setPrice(1200)
-				.build();
-		product2.setProductDetails(productd);
-		admin.addProduct(product1);
-		admin.addProduct(product2);
+
 	}
+*/
 }

@@ -1,19 +1,64 @@
 package com.example.Entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.example.Entity.ProductDetails.ProductDetailsBuilder;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Component
+@Entity
+@Table(name = "product")
 public class Product {
 	
 	protected String nameString;
-	protected String uniqueNoString;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public int id;
+	
 	protected long price;
 	
-	@Autowired
+	@JoinColumn(name = "product_details_id")
+	@OneToOne(cascade = CascadeType.ALL)
 	private ProductDetails productDetails;
+	
+	@ManyToMany(fetch=FetchType.LAZY,
+			cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+					 CascadeType.DETACH, CascadeType.REFRESH})
+	@JsonIgnore
+	@JoinTable(name = "product_agent",
+	joinColumns = @JoinColumn(name  = "product_id"),
+	inverseJoinColumns = @JoinColumn(name ="shipping_agent_id"))
+	private List<ShippingAgent> shippingAgents;
+	
+	public List<ShippingAgent> getShippingAgents() {
+		return shippingAgents;
+	}
+	public void setShippingAgents(List<ShippingAgent> shippingAgents) {
+		this.shippingAgents = shippingAgents;
+	}
+	
+	public void addShippingAgent(ShippingAgent shippingAgent) {
+		if (shippingAgents==null) {
+			shippingAgents = new ArrayList<ShippingAgent>();
+		}
+		shippingAgents.add(shippingAgent);
+	}
 	
 	public String getNameString() {
 		return nameString;
@@ -21,11 +66,11 @@ public class Product {
 	public void setNameString(String nameString) {
 		this.nameString = nameString;
 	}
-	public String getUniqueNoString() {
-		return uniqueNoString;
+	public int getId() {
+		return id;
 	}
-	public void setUniqueNoString(String uniqueNoString) {
-		this.uniqueNoString = uniqueNoString;
+	public void setId(int uniqueNoString) {
+		this.id = uniqueNoString;
 	}
 	public long getPrice() {
 		return price;
@@ -38,7 +83,7 @@ public class Product {
 	
 	@Override
 	public String toString() {
-		return "Product [nameString=" + nameString + ", uniqueNoString=" + uniqueNoString + ", price=" + price
+		return "Product [nameString=" + nameString + ", uniqueNoString=" + id + ", price=" + price
 				+  "]";
 	}
 	public ProductDetails getProductDetails() {
@@ -51,13 +96,13 @@ public class Product {
 		
 		this.nameString = builder.nameString;
 		this.price = builder.price;
-		this.uniqueNoString = builder.uniqueNoString;
+		this.id = builder.id;
 	}
 	public Product() {}
 public class ProductBuilder {
 		
 		private String nameString;
-		private String uniqueNoString;
+		private int id;
 		private long price;
 		
 		public ProductBuilder() {}
@@ -71,12 +116,12 @@ public class ProductBuilder {
 			return this;
 		}
 
-		public String getUniqueNoString() {
-			return uniqueNoString;
+		public int getUniqueNoString() {
+			return id;
 		}
 
-		public ProductBuilder setUniqueNoString(String uniqueNoString) {
-			this.uniqueNoString = uniqueNoString;
+		public ProductBuilder setUniqueNoString(int uniqueNoString) {
+			this.id = uniqueNoString;
 			return this;
 			
 		}
@@ -104,7 +149,7 @@ public class ProductBuilder {
 				.setTypeString("phone")
 				.build();
 		Product product = new Product().new ProductBuilder()
-				.setUniqueNoString("1rv")
+				.setUniqueNoString(1)
 				.setNameString("nokia 2662")
 				.setPrice(50000)
 				.build();
