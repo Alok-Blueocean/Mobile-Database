@@ -66,12 +66,17 @@ public class ProductDAOImpl implements ProductDAO {
 		session.close();
 		System.out.println(product);
 	}
-	@Transactional
+	
 	@Override
 	public List<Product> getAllProducts() {
+		
 		Session session = factory.openSession();
+		Transaction transactional = session.getTransaction();
+		transactional.begin();
+//		Session session = factory.openSession();
 		Query query = session.createQuery("from Product");
 		List<Product> products = query.getResultList();
+		transactional.commit();
 		session.close();
 		return products;
 	}

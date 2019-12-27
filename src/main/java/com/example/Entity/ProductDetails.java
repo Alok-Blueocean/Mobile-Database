@@ -35,7 +35,7 @@ public class ProductDetails extends Product {
 	private Period Gurantee;
 	
 	@JoinColumn(name = "product_details_id")
-	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
 	private List<Review> reviews;
 	
 	

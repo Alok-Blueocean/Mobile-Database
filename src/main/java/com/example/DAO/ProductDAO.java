@@ -3,7 +3,6 @@ package com.example.DAO;
 import java.util.List;
 
 import com.example.Entity.Product;
-import com.example.hiber.AddProductonetoonrBi;
 
 public interface ProductDAO {
 	

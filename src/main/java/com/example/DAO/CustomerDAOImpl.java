@@ -40,7 +40,7 @@ public class CustomerDAOImpl implements CustomerDAO{
 				.buildSessionFactory();
 		Session session = sessionFactory.openSession();
 
-		org.hibernate.query.Query query = 
+		org.hibernate.Query query = 
 				session.createQuery("from Customer where phone=?0");
 		query.setLong(0, 1);
 		Customer customer = (Customer) query.uniqueResult();

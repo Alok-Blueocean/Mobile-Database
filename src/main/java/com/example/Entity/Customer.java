@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
@@ -25,6 +26,7 @@ import org.springframework.stereotype.Component;
 @Entity
 @Table(name = "customer")
 public class Customer {
+
 
 	private String name;
 
@@ -41,9 +43,11 @@ public class Customer {
 			CascadeType.DETACH, CascadeType.REFRESH})
 	private List<Address> addresses;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "order_id")
-	private Order order;
+	
+	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+			CascadeType.DETACH, CascadeType.REFRESH},fetch = FetchType.EAGER)
+	@JoinColumn(name = "order_customer_id")
+	private Order cusOrder;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "cart_id")
@@ -54,14 +58,13 @@ public class Customer {
 		super();
 		this.name = name;
 		this.phone = phone;
-		//		this.address = address;
 	}
-	
+
 	public Order getOrder() {
-		return order;
+		return cusOrder;
 	}
 	public void setOrder(Order order) {
-		this.order = order;
+		this.cusOrder = order;
 	}
 	public Cart getCart() {
 		return cart;
@@ -84,9 +87,6 @@ public class Customer {
 	public void setPhone(long phone) {
 		this.phone = phone;
 	}
-	//	public Address getAddress() {
-	//		return address;
-	//	}
 	public void addAddress(Address address) {
 		if(addresses==null) {
 			addresses = new ArrayList<Address>();
@@ -100,13 +100,6 @@ public class Customer {
 	public void setAddress(List<Address> addresses) {
 		this.addresses = addresses;
 	}
-	//	public Invoice buyNow(Product product,int quantity) {
-	//		orderItem.putOrder(product, quantity);
-	//		order.addOrder(orderItem);
-	//		invoice.createInvoice();
-	//		order.clear();
-	//		return invoice;
-	//	}
 	@Override
 	public String toString() {
 		return "Customer [name=" + name + ", phone=" + phone +   "]";

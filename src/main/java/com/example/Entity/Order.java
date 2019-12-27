@@ -1,9 +1,8 @@
 package com.example.Entity;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,30 +10,31 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
 
 @Component
 @Entity
+@Table(name = "Productorder")
 public class Order {
 	
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "order_id")
-	private List<OrderItem> ordersItems = new ArrayList<OrderItem>();
+	public Order() {}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public long orderId;
+	private long id;
 	
-	@OneToOne(mappedBy = "order",cascade = CascadeType.ALL)
+	@OneToMany(cascade ={CascadeType.PERSIST, CascadeType.MERGE,
+			CascadeType.DETACH, CascadeType.REFRESH})
+	@JoinColumn(name = "order_item_id")
+	private List<OrderItem> ordersItems;
+	
+	@OneToOne(mappedBy = "cusOrder",cascade = CascadeType.ALL)
 	private Customer customer;
 	
-	public Order() {
-	}
-	public Order(Customer customer) {
-		orderId = customer.getPhone();
-	}
-	public void addOrder(OrderItem orderItem) {
+
+	public void addOrderItem(OrderItem orderItem) {
 		ordersItems.add(orderItem);
 	}
 	public void removeOrder(OrderItem orderItem) {
@@ -51,7 +51,7 @@ public class Order {
 	}
 	@Override
 	public String toString() {
-		return "Order [ordersItems=" + ordersItems + ", orderId=" + orderId + "]";
+		return "Order [ordersItems=" + ordersItems + ", orderId=" + id + "]";
 	}
 	public List<OrderItem> getOrdersItems() {
 		return ordersItems;
@@ -60,10 +60,10 @@ public class Order {
 		this.ordersItems = ordersItems;
 	}
 	public long getOrderId() {
-		return orderId;
+		return id;
 	}
-	public void setOrderId(long orderId) {
-		this.orderId = orderId;
+	public void setOrderId(long id) {
+		this.id = id;
 	}
 	public Customer getCustomer() {
 		return customer;
@@ -71,5 +71,4 @@ public class Order {
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
-	
 }

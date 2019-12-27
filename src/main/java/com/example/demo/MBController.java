@@ -8,15 +8,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.example.Entity.Admin;
 import com.example.Entity.Product;
-import com.example.Entity.ProductDetails;
-import com.example.Entity.ProductDetails.ProductDetailsBuilder;
 
 @RestController
 public class MBController {
-/*
+
 	@Autowired
 	public Admin admin;
 	
@@ -29,9 +26,5 @@ public class MBController {
 	}
 
 	@RequestMapping(value = "/add")
-	public void addProducts() {
-		
-
-	}
-*/
+	public void addProducts() {}
 }
