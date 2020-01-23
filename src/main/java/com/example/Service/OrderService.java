@@ -30,9 +30,21 @@ public class OrderService {
 		
 		orderItem.setQuantity(quantity);
 		orderItem.setProduct(product);
+		System.out.println(orderItem);
+		orderItemDAO.addOrderItems(orderItem);
 		order.addOrderItem(orderItem);
 		orderDAO.addOrder(order);
 	}
 	
+	public Order getOrderById(long id) {
+		
+		return orderDAO.getOrderById(id);
+	}
+	
+	public void addOrder(OrderItem orderItem) {
+		orderItemDAO.addOrderItems(orderItem);
+		order.addOrderItem(orderItem);
+		orderDAO.addOrder(order);
+	}
 }
 

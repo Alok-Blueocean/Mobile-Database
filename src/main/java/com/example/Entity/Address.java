@@ -20,8 +20,7 @@ public class Address {
 	@Column(name="id")
 	protected int id;
 	
-	@ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
-			 CascadeType.DETACH, CascadeType.REFRESH})
+	@ManyToOne(cascade= {CascadeType.ALL})
 	@JoinColumn(name="customer_phone")
 	private Customer customer;
 	

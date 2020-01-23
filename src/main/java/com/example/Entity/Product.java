@@ -14,22 +14,25 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.springframework.stereotype.Component;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+@Component
 @Entity
 @Table(name = "product")
 public class Product {
 	
 	public Product() {}
-	protected String nameString;
+	protected String productName;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public int id;
-	protected long price;
-	@JoinColumn(name = "product_details_id")
+	protected long productPrice;
 	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "product_details_id")
 	private ProductDetails productDetails;
-	
 	@ManyToMany(fetch=FetchType.LAZY,
 			cascade= {CascadeType.PERSIST, CascadeType.MERGE,
 					 CascadeType.DETACH, CascadeType.REFRESH})
@@ -52,10 +55,10 @@ public class Product {
 		shippingAgents.add(shippingAgent);
 	}
 	public String getNameString() {
-		return nameString;
+		return productName;
 	}
 	public void setNameString(String nameString) {
-		this.nameString = nameString;
+		this.productName = nameString;
 	}
 	public int getId() {
 		return id;
@@ -64,14 +67,14 @@ public class Product {
 		this.id = uniqueNoString;
 	}
 	public long getPrice() {
-		return price;
+		return productPrice;
 	}
 	public void setPrice(long price) {
-		this.price = price;
+		this.productPrice = price;
 	}
 	@Override
 	public String toString() {
-		return "Product [nameString=" + nameString + ", uniqueNoString=" + id + ", price=" + price
+		return "Product [nameString=" + productName + ", uniqueNoString=" + id + ", price=" + productPrice
 				+  "]";
 	}
 	public ProductDetails getProductDetails() {
@@ -82,13 +85,11 @@ public class Product {
 	}
 	public Product(ProductBuilder builder) {
 		
-		this.nameString = builder.nameString;
-		this.price = builder.price;
+		this.productName = builder.nameString;
+		this.productPrice = builder.price;
 		this.id = builder.id;
 	}
-
 public class ProductBuilder {
-		
 		private String nameString;
 		private int id;
 		private long price;
@@ -107,7 +108,6 @@ public class ProductBuilder {
 		public ProductBuilder setUniqueNoString(int uniqueNoString) {
 			this.id = uniqueNoString;
 			return this;
-			
 		}
 		public long getPrice() {
 			return price;
@@ -131,7 +131,6 @@ public class ProductBuilder {
 				.setPrice(50000)
 				.build();
 		/* If we make the Product builder class static then initialize like this */
-		
 		System.out.println(product);
 		
 	}

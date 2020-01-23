@@ -12,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
@@ -39,13 +38,11 @@ public class Customer {
 	 * 
 	 */
 	@OneToMany(mappedBy = "customer",fetch = FetchType.EAGER,
-			cascade= {CascadeType.PERSIST, CascadeType.MERGE,
-			CascadeType.DETACH, CascadeType.REFRESH})
+			cascade= {CascadeType.ALL})
 	private List<Address> addresses;
 	
 	
-	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,
-			CascadeType.DETACH, CascadeType.REFRESH},fetch = FetchType.EAGER)
+	@OneToOne(cascade = {CascadeType.ALL},fetch = FetchType.EAGER)
 	@JoinColumn(name = "order_customer_id")
 	private Order cusOrder;
 	

@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.DAO.ProductDAO;
 import com.example.Entity.Admin;
 import com.example.Entity.Product;
+import com.example.Entity.ProductDetails;
+import com.example.Entity.ProductDetails.ProductDetailsBuilder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -46,6 +48,14 @@ public class ProductController {
 	@GetMapping("/product/get/")
 	@ResponseBody
 	public ResponseEntity<List<Product>> getAllProducts() throws JsonProcessingException {
+		
+//		ProductDetailsBuilder productDetailsBuilder = new ProductDetails().new  ProductDetailsBuilder().setPrice(1000)
+//				.setTypeString("smartphone");
+//		ProductDetails productDetails = new ProductDetails(productDetailsBuilder);
+//		Product product = new Product();
+//		product.setNameString("Nokia");
+//		product.setProductDetails(productDetails);
+//		productDAO.addProduct(product);
 		return new ResponseEntity<List<Product>>(productDAO.getAllProducts(),HttpStatus.OK);
 	}
 	@GetMapping("/product/get/{id}")

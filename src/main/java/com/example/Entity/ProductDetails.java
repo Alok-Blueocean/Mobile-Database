@@ -34,7 +34,7 @@ public class ProductDetails extends Product {
 	private Date addedDate;
 	private Period Gurantee;
 	
-	@JoinColumn(name = "product_details_id")
+	@JoinColumn(name = "product_review_id")
 	@OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
 	private List<Review> reviews;
 	
@@ -79,10 +79,10 @@ public class ProductDetails extends Product {
 	}
 	public ProductDetails(ProductDetailsBuilder builder) {
 		
-		this.nameString = builder.nameString;
+		this.productName = builder.nameString;
 		this.addedDate = builder.addedDate;
 		this.Gurantee = builder.Gurantee;
-		this.price = builder.price;
+		this.productPrice = builder.price;
 		this.id = builder.id;
 		this.typeString = builder.typeString;
 	}
@@ -91,8 +91,8 @@ public class ProductDetails extends Product {
 	@Override
 	public String toString() {
 		return "ProductDetails [typeString=" + typeString + ", addedDate=" + addedDate + ", Gurantee=" + Gurantee
-				+ ", tagSet="  + ", nameString=" + nameString + ", uniqueNoString=" + id
-				+ ", price=" + price + "]";
+				+ ", tagSet="  + ", nameString=" + productName + ", uniqueNoString=" + id
+				+ ", price=" + productPrice + "]";
 	}
 
 

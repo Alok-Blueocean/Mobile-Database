@@ -1,9 +1,10 @@
 package com.example.Entity;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,16 +26,19 @@ public class Order {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@OneToMany(cascade ={CascadeType.PERSIST, CascadeType.MERGE,
-			CascadeType.DETACH, CascadeType.REFRESH})
+	@OneToMany(cascade ={CascadeType.ALL})
 	@JoinColumn(name = "order_item_id")
 	private List<OrderItem> ordersItems;
 	
-	@OneToOne(mappedBy = "cusOrder",cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "cusOrder",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 	private Customer customer;
 	
 
 	public void addOrderItem(OrderItem orderItem) {
+		System.out.println(orderItem);
+		if (ordersItems==null) {
+			ordersItems = new ArrayList<OrderItem>();
+		}
 		ordersItems.add(orderItem);
 	}
 	public void removeOrder(OrderItem orderItem) {
@@ -51,7 +55,7 @@ public class Order {
 	}
 	@Override
 	public String toString() {
-		return "Order [ordersItems=" + ordersItems + ", orderId=" + id + "]";
+		return "Order [id=" + id + ", ordersItems=" + ordersItems + ", customer=" + customer + "]";
 	}
 	public List<OrderItem> getOrdersItems() {
 		return ordersItems;
@@ -71,4 +75,5 @@ public class Order {
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
+	
 }

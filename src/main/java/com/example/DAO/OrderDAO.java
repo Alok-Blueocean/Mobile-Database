@@ -5,5 +5,5 @@ import com.example.Entity.Order;
 public interface OrderDAO {
 
 	void addOrder(Order order);
-
+	public Order getOrderById(long id);
 }

@@ -39,4 +39,16 @@ public class OrderDAOImpl implements OrderDAO
 		session.saveOrUpdate(order);
 		session.close();
 	}
+	@Override
+	@Transactional
+	public Order getOrderById(long id) {
+		Session session = sessionFactory.openSession();
+		org.hibernate.query.Query query = session.createQuery("from Productorder where id=?0");
+		query.setLong(0, id);
+		Order order = (Order) query.uniqueResult();
+		session.close();
+		System.out.println("orders");
+		System.out.println(order.getOrdersItems());
+		return order;
+	}
 }
